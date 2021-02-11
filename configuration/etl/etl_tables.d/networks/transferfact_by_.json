@@ -55,6 +55,18 @@
                 "comment": "DIMENSION: The user account associated with the data transfer."
             },
             {
+                "name": "filename_id",
+                "type": "int(11)",
+                "nullable": false,
+                "comment": "DIMENSION: The name of the file associated with the data transfer."
+            },
+            {
+                "name": "destination_id",
+                "type": "int(11)",
+                "nullable": false,
+                "comment": "DIMENSION: The destination for the data inferred from the IP address."
+            },
+            {
                 "name": "type_id",
                 "type": "int(11)",
                 "nullable": false,
@@ -63,37 +75,56 @@
             {
                 "name": "code_id",
                 "type": "int(11)",
-                "nullable": false
+                "nullable": false,
+                "comment": "DIMENSION: The result code of the data transfer."
             },
             {
                 "name": "taskid_id",
                 "type": "int(11)",
+                "nullable": false,
+                "comment": "DIMENSION: The task identifier for the data transfer."
+            },
+            {
+                "name": "ended_transfer_count",
+                "type": "int(11)",
+                "comment": "FACT: The number of transfers that ended during this time period.",
                 "nullable": false
             },
             {
-                "name": "filename_id",
+                "name": "started_transfer_count",
                 "type": "int(11)",
-                "nullable": false
-            },
-            {
-                "name": "destination_id",
-                "type": "int(11)",
+                "comment": "FACT: The number of transfers that started during this time period.",
                 "nullable": false
             },
             {
                 "name": "transfer_count",
                 "type": "int(11)",
+                "comment": "FACT: The number of transfers that were running during this time period.",
                 "nullable": false
             },
             {
-                "name": "avg_transfer_rate",
-                "type": "double",
-                "nullalble" false
+                "name": "wallduration",
+                "type": "decimal(24,6)",
+                "comment": "FACT: (seconds) The wallduration of the tranfers that were running during this period. This will only count the walltime of the tranfers that fell during this day. If a tranfer started in the previous day(s) the wall time for that day will be added to that day. Same logic is true if a tranfer ends not in this day, but upcoming days.",
+                "nullable": false
+            },
+            {
+                "name": "sum_wallduration_squared",
+                "type": "DECIMAL(36,6)",
+                "comment": "FACT: (seconds^2) The sum of the square of wallduration of the transfers that were running during this period. This will only count the walltime of the transfers that fell during this day. If a transfer started in the previous day(s) the wall time for that day will be added to that day. Same logic is true if a transfer ends not in this day, but upcoming days.",
+                "nullable": false
             },
             {
                 "name": "byte_count",
                 "type": "int(20)",
-                "nullable": false
+                "nullable": false,
+                "comment": "FACT: the amount of data transferred for transfers in this time period. If a transfer spanned this time period then only the data transferred during this time period is included under the assumption that the data rate was constant for the transfer."
+            },
+            {
+                "name": "sum_byte_count_squared",
+                "type": "DECIMAL(36,4)",
+                "nullable": false,
+                "comment": "FACT: The sum of the square of the bytpe count for transfers in this time period."
             }
         ],
         "indexes": [
@@ -128,9 +159,33 @@
                 ]
             },
             {
+                "name": "index_filename_id",
+                "columns": [
+                    "filename_id"
+                ]
+            },
+            {
+                "name": "index_destination_id",
+                "columns": [
+                    "destination_id"
+                ]
+            },
+            {
                 "name": "index_type_id",
                 "columns": [
                     "type_id"
+                ]
+            },
+            {
+                "name": "index_code_id",
+                "columns": [
+                    "code_id"
+                ]
+            },
+            {
+                "name": "index_taskid_id",
+                "columns": [
+                    "taskid_id"
                 ]
             },
             {
@@ -147,7 +202,6 @@
             }
         ],
         "table_prefix": "transferfact_by_"
-        ]
     }
 }
 

@@ -1,4 +1,4 @@
-# XDMoD Netowrks Module
+# XDMoD Networks Module
 
 The XDMoD Networks Module is an optional module for
 tracking usage network data with Open XDMoD.

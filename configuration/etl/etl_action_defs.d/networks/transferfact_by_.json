@@ -1,0 +1,102 @@
+{
+    "#": "Aggregation of network transfer data",
+    "table_definition": {
+        "$ref": "${table_definition_dir}/networks/transferfact_by_.json#/table_definition"
+    },
+
+    "aggregation_period_query": {
+        "overseer_restrictions": {
+            "last_modified_start_date": "last_modified >= ${VALUE}",
+            "last_modified_end_date": "last_modified <= ${VALUE}",
+            "include_only_resource_codes": "resource_id IN ${VALUE}",
+            "exclude_resource_codes": "resource_id NOT IN ${VALUE}"
+        }
+    },
+
+    "destination_query": {
+        "overseer_restrictions": {
+            "include_only_resource_codes": "record_resource_id IN ${VALUE}",
+            "exclude_resource_codes": "record_resource_id NOT IN ${VALUE}"
+        }
+    },
+    "source_query": {
+        "overseer_restrictions": {
+            "include_only_resource_codes": "tf.resource_id IN ${VALUE}",
+            "exclude_resource_codes": "tf.resource_id NOT IN ${VALUE}"
+        },
+        "query_hint": "SQL_NO_CACHE",
+        "records": {
+            "${AGGREGATION_UNIT}_id": "${:PERIOD_ID}",
+            "year": "${:YEAR_VALUE}",
+            "${AGGREGATION_UNIT}": "${:PERIOD_VALUE}",
+            "record_resource_id": "tf.resource_id",
+            "resource_organization_id": "r.organization_id",
+            "person_id": "tf.person_id",
+            "person_organization_id": "p.organization_id",
+            "user_id": "tf.user_id",
+            "filename_id": "tf.filename_id",
+            "destination_id": "tf.destination_id",
+            "type_id": "tf.type_id",
+            "code_id": "tf.code_id",
+            "taskid_id": "tf.taskid_id",
+            "ended_transfer_count": "SUM( IF(tf.end_day_id BETWEEN ${:PERIOD_START_DAY_ID} AND ${:PERIOD_END_DAY_ID}, 1, 0) )",
+            "started_transfer_count": "SUM( IF(tf.start_day_id BETWEEN ${:PERIOD_START_DAY_ID} AND ${:PERIOD_END_DAY_ID}, 1, 0) )",
+            "transfer_count": "SUM(1)",
+            "wallduration": "COALESCE(SUM( ${wallduration_case_statement}), 0)",
+            "sum_wallduration_squared": "COALESCE(SUM( CAST(POW(${wallduration_case_statement}, 2) AS DECIMAL(36,4)) ), 0)",
+            "byte_count": "COALESCE(SUM(tf.bytes * ${wallduration_case_statement}), 0)",
+            "sum_byte_count_squared": "COALESCE(SUM( CAST(POW(tf.bytes * ${wallduration_case_statement}, 2) AS DECIMAL(36,4)) ), 0)"
+        },
+        "groupby": [
+            "${AGGREGATION_UNIT}_id",
+            "year",
+            "${AGGREGATION_UNIT}",
+            "record_resource_id",
+            "resource_organization_id",
+            "person_id",
+            "person_organization_id",
+            "user_id",
+            "filename_id",
+            "destination_id",
+            "type_id",
+            "code_id",
+            "taskid_id"
+        ],
+        "joins": [
+            {
+                "name": "transferfact",
+                "schema": "${SOURCE_SCHEMA}",
+                "alias": "tf"
+            },
+            {
+                "name": "resourcefact",
+                "schema": "${UTILITY_SCHEMA}",
+                "alias": "r",
+                "on": "r.id = tf.resource_id"
+            },
+            {
+                "name": "person",
+                "schema": "${UTILITY_SCHEMA}",
+                "alias": "p",
+                "on": "p.id = tf.person_id"
+            }
+        ],
+        "where": [
+            "tf.start_day_id <= ${:PERIOD_END_DAY_ID} AND tf.end_day_id >= ${:PERIOD_START_DAY_ID}"
+        ],
+        "macros": [
+            {
+                "name": "wallduration_case_statement",
+                "file": "statistic_ratio_case.sql",
+                "args": {
+                    "statistic": "tf.end_time_ts - tf.start_time_ts",
+                    "max": "${:PERIOD_SECONDS}",
+                    "src_start_ts": "tf.start_time_ts",
+                    "src_end_ts": "tf.end_time_ts",
+                    "dest_start_ts": "${:PERIOD_START_TS}",
+                    "dest_end_ts": "${:PERIOD_END_TS}"
+                }
+            }
+        ]
+    }
+}

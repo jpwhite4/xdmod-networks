@@ -77,5 +77,18 @@
                 }
             ]
         }
+    ],
+    "aggregation": [
+
+        {
+            "name": "aggregate",
+            "namespace": "ETL\\Aggregator",
+            "options_class": "AggregatorOptions",
+            "class": "SimpleAggregator",
+            "description": "Aggregate Network Transfer Log records",
+            "definition_file": "networks/transferfact_by_.json",
+            "table_prefix": "transferfact_by_",
+            "aggregation_units": ["day", "month", "quarter", "year"]
+        }
     ]
 }
