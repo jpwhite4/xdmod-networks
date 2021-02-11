@@ -1,0 +1,60 @@
+{
+    "table_definition": [
+        {
+            "$ref": "${table_definition_dir}/networks/files.json#/table_definition"
+        },
+        {
+            "$ref": "${table_definition_dir}/networks/tasks.json#/table_definition"
+        },
+        {
+            "$ref": "${table_definition_dir}/networks/types.json#/table_definition"
+        },
+        {
+            "$ref": "${table_definition_dir}/networks/location.json#/table_definition"
+        },
+        {
+            "$ref": "${table_definition_dir}/networks/users.json#/table_definition"
+        }
+    ],
+    "source_query": {
+        "records": {
+            "user": "s.user",
+            "filename": "s.filename",
+            "filename_sha256": "UNHEX(SHA2(s.filename, 256))",
+            "type": "s.type",
+            "taskid_bin": "UNHEX(REPLACE(s.taskid, '-', ''))",
+            "city": "s.dest_city",
+            "state": "s.dest_subdivision",
+            "country": "s.dest_country",
+            "location_name": "CASE WHEN s.dest_city = 'unknown' AND s.dest_subdivision = 'unknown' AND s.dest_country = 'unknown' THEN 'Unknown' ELSE CONCAT_WS(', ', s.dest_city, s.dest_subdivision, s.dest_country) END"
+        },
+        "joins": [
+            {
+                "name": "staging",
+                "schema": "${SOURCE_SCHEMA}",
+                "alias": "s"
+            }
+        ]
+    },
+    "destination_record_map": {
+        "files": {
+            "filename": "filename",
+            "filename_sha256": "filename_sha256"
+        },
+        "users": {
+            "username": "user"
+        },
+        "tasks": {
+            "taskid_bin": "taskid_bin"
+        },
+        "types": {
+            "type": "type"
+        },
+        "location": {
+            "city": "city",
+            "state": "state",
+            "country": "country",
+            "name": "location_name"
+        }
+    }
+}

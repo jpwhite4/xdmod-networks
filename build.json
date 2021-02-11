@@ -1,0 +1,30 @@
+{
+    "name": "xdmod-networks",
+    "version": "9.5.0",
+    "release": "1.0",
+    "files": {
+        "include_paths": [
+        ],
+        "include_patterns": [
+        ],
+        "exclude_paths": [
+        ],
+        "exclude_patterns": [
+            "#/\\.#",
+            "#/docs#",
+            "#/tests#"
+        ]
+    },
+    "file_maps": {
+        "data": [
+            "classes"
+        ],
+        "etc": {
+            "configuration/etl": "",
+            "configuration/modules.d": "",
+            "configuration/roles.d": "",
+            "configuration/datawarehouse.d": "",
+            "configuration/resource_types.d": ""
+        }
+    }
+}

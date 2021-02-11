@@ -1,0 +1,36 @@
+{
+    "table_definition": {
+        "name": "tasks",
+        "engine": "InnoDB",
+        "charset": "utf8mb4",
+        "collation": "utf8mb4_general_ci",
+        "columns": [
+            {
+                "name": "id",
+                "type": "int(11)",
+                "nullable": false,
+                "extra": "auto_increment"
+            },
+            {
+                "name": "taskid_bin",
+                "type": "binary(16)",
+                "nullable": false
+            }
+        ],
+        "indexes": [
+            {
+                "name": "PRIMARY",
+                "columns": [
+                    "id"
+                ]
+            },
+            {
+                "name": "UNIQ",
+                "columns": [
+                    "taskid_bin"
+                ],
+                "is_unique": true
+            }
+        ]
+    }
+}

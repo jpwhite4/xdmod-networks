@@ -1,0 +1,41 @@
+{
+    "table_definition": {
+        "name": "files",
+        "engine": "InnoDB",
+        "charset": "utf8mb4",
+        "collation": "utf8mb4_general_ci",
+        "columns": [
+            {
+                "name": "id",
+                "type": "int(11)",
+                "extra": "auto_increment",
+                "nullable": false
+            },
+            {
+                "name": "filename",
+                "type": "varchar(255)",
+                "nullable": false
+            },
+            {
+                "name": "filename_sha256",
+                "type": "binary(32)",
+                "nullable": false
+            }
+        ],
+        "indexes": [
+            {
+                "name": "PRIMARY",
+                "columns": [
+                    "id"
+                ]
+            },
+            {
+                "name": "UNIQ",
+                "columns": [
+                    "filename_sha256"
+                ],
+                "is_unique": true
+            }
+        ]
+    }
+}

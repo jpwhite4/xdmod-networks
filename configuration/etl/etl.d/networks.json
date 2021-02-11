@@ -1,0 +1,81 @@
+{
+    "module": "networks",
+    "defaults": {
+        "global": {
+            "truncate_destination": false,
+            "namespace": "ETL\\Ingestor",
+            "options_class": "IngestorOptions",
+            "endpoints": {
+                "source": {
+                    "type": "mysql",
+                    "name": "Database with usage data",
+                    "config": "database",
+                    "schema": "modw_networks"
+                },
+                "destination": {
+                    "type": "mysql",
+                    "name": "Database with usage data",
+                    "config": "database",
+                    "schema": "modw_networks"
+                }
+            }
+        }
+    },
+    "log-ingestion": [
+        {
+            "name": "staging",
+            "description": "Load webserver log data into a staging table.",
+            "class": "StructuredFileIngestor",
+            "truncate_destination": true,
+            "definition_file": "networks/staging.json",
+            "endpoints": {
+                "source": {
+                    "type": "gridftplog",
+                    "name": "Grid FTP Server Log",
+                    "path": "/scratch/gridftp.log",
+                    "record_separator": "\n",
+                    "geoip_file": "/tmp/GeoLite2-City_20210112/GeoLite2-City.mmdb"
+                }
+            }
+        },
+        {
+            "name": "staging-to-dimensions",
+            "description": "Load log data from the staging table to the dimension tables",
+            "class": "DatabaseIngestor",
+            "definition_file": "networks/dimensions.json",
+            "hide_sql_warning_codes": [
+                1062
+            ]
+        },
+        {
+            "name": "dimension-orderids",
+            "description": "Update the order_id columns in the various dimensions",
+            "namespace": "ETL\\Maintenance",
+            "class": "ExecuteSql",
+            "options_class": "MaintenanceOptions",
+            "sql_file_list": [
+                {
+                    "sql_file": "networks/dimension_orderid.sql"
+                }
+            ]
+        },
+        {
+            "name": "staging-to-facts",
+            "description": "Load log data from the staging table to the fact table",
+            "class": "DatabaseIngestor",
+            "definition_file": "networks/facts.json"
+        },
+        {
+            "name": "resolve-people",
+            "description": "cross reference the usernames from the log file to identify corresponding person in the person table",
+            "namespace": "ETL\\Maintenance",
+            "class": "ExecuteSql",
+            "options_class": "MaintenanceOptions",
+            "sql_file_list": [
+                {
+                    "sql_file": "networks/person_lookup.sql"
+                }
+            ]
+        }
+    ]
+}

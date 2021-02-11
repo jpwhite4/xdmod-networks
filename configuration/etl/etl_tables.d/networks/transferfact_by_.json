@@ -1,0 +1,153 @@
+{
+    "table_definition": {
+        "name": "transferfact_by_",
+        "comment": "Transfer Facts aggregated by ${AGGREGATION_UNIT}.",
+        "engine": "MyISAM",
+        "charset": "utf8mb4",
+        "collation": "utf8mb4_general_ci",
+        "columns": [
+            {
+                "name": "${AGGREGATION_UNIT}_id",
+                "type": "int(10) unsigned",
+                "nullable": false,
+                "comment": "DIMENSION: The id related to modw.${AGGREGATION_UNIT}s."
+            },
+            {
+                "name": "year",
+                "type": "smallint(5) unsigned",
+                "nullable": false,
+                "comment": "DIMENSION: The year of the ${AGGREGATION_UNIT}"
+            },
+            {
+                "name": "${AGGREGATION_UNIT}",
+                "type": "smallint(5) unsigned",
+                "nullable": false,
+                "comment": "DIMENSION: The ${AGGREGATION_UNIT} of the year."
+            },
+            {
+                "name": "record_resource_id",
+                "type": "int(11)",
+                "nullable": false,
+                "comment": "DIMENSION: The resource."
+            },
+            {
+                "name": "resource_organization_id",
+                "type": "int(11)",
+                "nullable": false,
+                "comment": "DIMENSION: The organization of the resource that the jobs ran on."
+            },
+            {
+                "name": "person_id",
+                "type": "int(11)",
+                "nullable": false,
+                "comment": "DIMENSION: The person id associated with the data transfer."
+            },
+            {
+                "name": "person_organization_id",
+                "type": "int(11)",
+                "nullable": false,
+                "comment": "DIMENSION: The person organization associated with the data transfer."
+            },
+            {
+                "name": "user_id",
+                "type": "int(11)",
+                "nullable": false,
+                "comment": "DIMENSION: The user account associated with the data transfer."
+            },
+            {
+                "name": "type_id",
+                "type": "int(11)",
+                "nullable": false,
+                "comment": "DIMENSION: The type of the data transfer."
+            },
+            {
+                "name": "code_id",
+                "type": "int(11)",
+                "nullable": false
+            },
+            {
+                "name": "taskid_id",
+                "type": "int(11)",
+                "nullable": false
+            },
+            {
+                "name": "filename_id",
+                "type": "int(11)",
+                "nullable": false
+            },
+            {
+                "name": "destination_id",
+                "type": "int(11)",
+                "nullable": false
+            },
+            {
+                "name": "transfer_count",
+                "type": "int(11)",
+                "nullable": false
+            },
+            {
+                "name": "avg_transfer_rate",
+                "type": "double",
+                "nullalble" false
+            },
+            {
+                "name": "byte_count",
+                "type": "int(20)",
+                "nullable": false
+            }
+        ],
+        "indexes": [
+            {
+                "name": "index_resource",
+                "columns": [
+                    "record_resource_id"
+                ]
+            },
+            {
+                "name": "index_resource_organization",
+                "columns": [
+                    "resource_organization_id"
+                ]
+            },
+            {
+                "name": "index_person",
+                "columns": [
+                    "person_id"
+                ]
+            },
+            {
+                "name": "index_person_organization",
+                "columns": [
+                    "person_organization_id"
+                ]
+            },
+            {
+                "name": "index_user_id",
+                "columns": [
+                    "user_id"
+                ]
+            },
+            {
+                "name": "index_type_id",
+                "columns": [
+                    "type_id"
+                ]
+            },
+            {
+                "name": "index_period_value",
+                "columns": [
+                    "${AGGREGATION_UNIT}"
+                ]
+            },
+            {
+                "name": "index_period",
+                "columns": [
+                    "${AGGREGATION_UNIT}_id"
+                ]
+            }
+        ],
+        "table_prefix": "transferfact_by_"
+        ]
+    }
+}
+

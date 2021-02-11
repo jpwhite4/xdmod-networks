@@ -1,0 +1,138 @@
+{
+    "table_definition": {
+        "name": "transferfact",
+        "engine": "InnoDB",
+        "charset": "utf8mb4",
+        "collation": "utf8mb4_general_ci",
+        "columns": [
+            {
+                "name": "id",
+                "type": "int(11)",
+                "extra": "auto_increment",
+                "nullable": false
+            },
+            {
+                "name": "resource_id",
+                "type": "int(11)",
+                "nullable": false
+            },
+            {
+                "name": "start_time_ts",
+                "type": "decimal(17, 6)",
+                "nullable": false
+            },
+            {
+                "name": "end_time_ts",
+                "type": "decimal(17, 6)",
+                "nullable": false
+            },
+            {
+                "name": "start_day_id",
+                "type": "int(11)",
+                "nullable": false
+            },
+            {
+                "name": "end_day_id",
+                "type": "int(11)",
+                "nullable": false
+            },
+            {
+                "name": "person_id",
+                "type": "int(11)",
+                "nullable": false
+            },
+            {
+                "name": "user_id",
+                "type": "int(11)",
+                "nullable": false
+            },
+            {
+                "name": "filename_id",
+                "type": "int(11)",
+                "nullable": false
+            },
+            {
+                "name": "destination_id",
+                "type": "int(11)",
+                "nullable": false
+            },
+            {
+                "name": "type_id",
+                "type": "int(11)",
+                "nullable": false
+            },
+            {
+                "name": "code_id",
+                "type": "int(11)",
+                "nullable": false
+            },
+            {
+                "name": "taskid_id",
+                "type": "int(11)",
+                "nullable": false
+            },
+            {
+                "name": "buffer_size",
+                "type": "int(11)",
+                "nullable": false
+            },
+            {
+                "name": "block_size",
+                "type": "int(11)",
+                "nullable": false
+            },
+            {
+                "name": "bytes",
+                "type": "int(20)",
+                "nullable": false
+            },
+            {
+                "name": "stream_count",
+                "type": "int(11)",
+                "nullable": false
+            },
+            {
+                "name": "stripe_count",
+                "type": "int(11)",
+                "nullable": false
+            },
+            {
+                "name": "last_modified",
+                "type": "timestamp",
+                "nullable": false,
+                "default": "CURRENT_TIMESTAMP",
+                "extra": "on update CURRENT_TIMESTAMP"
+            }
+        ],
+        "indexes": [
+            {
+                "name": "PRIMARY",
+                "columns": [
+                    "id"
+                ]
+            },
+            {
+                "name": "UNIQ",
+                "columns": [
+                    "resource_id",
+                    "start_time_ts",
+                    "end_time_ts",
+                    "user_id",
+                    "taskid_id",
+                    "filename_id",
+                    "destination_id",
+                    "type_id",
+                    "code_id"
+                ],
+                "is_unique": true
+            },
+            {
+                "name": "index_last_modified",
+                "columns": [
+                    "last_modified"
+                ]
+            }
+        ]
+    }
+}
+

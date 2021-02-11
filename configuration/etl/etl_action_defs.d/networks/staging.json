@@ -1,0 +1,25 @@
+{
+    "table_definition": {
+        "$ref": "${table_definition_dir}/networks/staging.json#/table_definition"
+    },
+    "destination_record_map": {
+        "staging": {
+            "start_time_ts": "start_time_ts",
+            "end_time_ts": "end_time_ts",
+            "user": "user",
+            "filename": "filename",
+            "buffer_size": "buffer_size",
+            "block_size": "block_size",
+            "bytes": "bytes",
+            "stream_count": "stream_count",
+            "stripe_count": "stripe_count",
+            "destination": "destination",
+            "dest_city": "dest_city",
+            "dest_subdivision": "dest_subdivision",
+            "dest_country": "dest_country",
+            "type": "type",
+            "code": "code",
+            "taskid": "taskid"
+        }
+    }
+}
