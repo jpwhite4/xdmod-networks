@@ -1,0 +1,25 @@
+{
+    "module": "networks",
+    "+roles": {
+        "+default": {
+            "+query_descripters": [
+                {
+                    "realm": "Network",
+                    "group_by": "none"
+                },
+                {
+                    "realm": "Network",
+                    "group_by": "person"
+                },
+                {
+                    "realm": "Network",
+                    "group_by": "resource"
+                },
+                {
+                    "realm": "Network",
+                    "group_by": "networkuser"
+                }
+            ]
+        }
+    }
+}
