@@ -137,9 +137,6 @@
                 "precision": 0,
                 "unit": "Number of Files"
             },
-            "task_count": {
-
-            },
             "started_transfer_count": {
                 "formula": "SUM(agg.started_transfer_count)",
                 "description_html": "The total number of data transfers that started in this time period.",
