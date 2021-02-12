@@ -1,8 +1,8 @@
 {
     "resource_types": {
-        "Gateway": {
+        "Grid": {
             "realms": [
-                "OnDemand"
+                "Network"
             ]
         }
     }

@@ -17,7 +17,7 @@ tested with [MaxMind's GeoLite2 City database](https://dev.maxmind.com/geoip/geo
 The database file is not distributed with Open XDMoD and must be
 obtained seperately. If no database is present then all location
 information will be marked as 'Unknown'. The database is not
-required for the Open XDMoD module to display and process OnDemand
+required for the Open XDMoD module to display and process 
 server log data.
 
 TODO: specify GeoIP data file location

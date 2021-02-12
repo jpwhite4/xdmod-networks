@@ -2,7 +2,7 @@
     "Network": {
         "aggregate_schema": "modw_networks",
         "aggregate_table_alias": "agg",
-        "aggregate_table_prefix": "pagefact_by_",
+        "aggregate_table_prefix": "transferfact_by_",
         "datasource": "Grid FTP server logs",
         "group_bys": {
             "day": {
@@ -131,7 +131,7 @@
                 "unit": "Seconds"
             },
             "file_count": {
-                "formula": "COUNT(DISTINCT agg.file_id)",
+                "formula": "COUNT(DISTINCT agg.filename_id)",
                 "description_html": "The total number of files accessed. Only the filename is used to distingush different files so the metric does not take into account if a file changes over time.",
                 "name": "Number of Files: Active",
                 "precision": 0,
