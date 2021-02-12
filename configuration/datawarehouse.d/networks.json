@@ -33,7 +33,7 @@
                 "attribute_table_schema": "modw_networks",
                 "attribute_to_aggregate_table_key_map": [
                     {
-                        "id": "location_id"
+                        "id": "destination_id"
                     }
                 ],
                 "attribute_values_query": {
@@ -125,9 +125,9 @@
             "avg_wallduration": {
                 "aggregate_formula": "COALESCE(SUM(agg.wallduration)/SUM(CASE ${DATE_TABLE_ID_FIELD} WHEN ${MIN_DATE_ID} THEN agg.transfer_count ELSE agg.started_transfer_count END),0)",
                 "description_html": "The average time, in seconds, a transfer takes to execute.<br/>In timeseries view mode, the statistic shows the average wall time per transfer per time period. In aggregate view mode the statistic only includes the transfer wall hours between the defined time range. The wall hours outside the time range are not included in the calculation.<br /> <i>Wall Time:</i> Wall time is defined as the linear time between start and end time of execution for a particular transfer.",
-                "name": "Wall Hours: Per Job",
+                "name": "Wall Time: Per Transfer",
                 "precision": 2,
-                "timeseries_formula": "COALESCE(SUM(agg.wallduration)/SUM(agg.running_transfer_count),0)/3600.0",
+                "timeseries_formula": "COALESCE(SUM(agg.wallduration)/SUM(agg.transfer_count),0)/3600.0",
                 "unit": "Seconds"
             },
             "file_count": {
@@ -157,6 +157,13 @@
                 "precision": 0,
                 "name": "Number of Transfers",
                 "unit": "Number of Transfers"
+            },
+            "transferred_bytes": {
+                "formula": "SUM(agg.byte_count)",
+                "description_html": "The amount of data transferred.",
+                "precision": 0,
+                "name": "Data Transferred",
+                "unit": "Bytes"
             },
             "user_count": {
                 "formula": "COUNT(DISTINCT user_id)",

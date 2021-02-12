@@ -17,7 +17,19 @@
                 },
                 {
                     "realm": "Network",
+                    "group_by": "destination"
+                },
+                {
+                    "realm": "Network",
                     "group_by": "networkuser"
+                },
+                {
+                    "realm": "Network",
+                    "group_by": "provider"
+                },
+                {
+                    "realm": "Network",
+                    "group_by": "transfer_type"
                 }
             ]
         }
