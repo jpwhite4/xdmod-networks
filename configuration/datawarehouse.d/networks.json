@@ -141,7 +141,7 @@
                 "formula": "SUM(agg.started_transfer_count)",
                 "description_html": "The total number of data transfers that started in this time period.",
                 "precision": 0,
-                "name": "Number of Transfers Ended",
+                "name": "Number of Transfers Started",
                 "unit": "Number of Transfers"
             },
             "ended_transfer_count": {
@@ -157,6 +157,13 @@
                 "precision": 0,
                 "name": "Number of Transfers",
                 "unit": "Number of Transfers"
+            },
+            "avg_datarate": {
+                "formula": "SUM( (agg.byte_count / agg.wallduration) * agg.byte_count ) / SUM(agg.byte_count)",
+                "description_html": "The average data rate weighted by amount of data transferred.",
+                "precision": 3,
+                "name": "Data Rate: Weighted by size",
+                "unit": "B/s"
             },
             "transferred_bytes": {
                 "formula": "SUM(agg.byte_count)",
@@ -178,6 +185,13 @@
                 "precision": 2,
                 "name": "Number of Transfers: Per User",
                 "unit": "Number of Transfers"
+            },
+            "total_wallduration": {
+                "formula": "SUM(wallduration) / 3600.0",
+                "description_html": "The total wall clock time spent in data transfers.",
+                "name": "Wall Hours: Total",
+                "precision": 2,
+                "unit": "Hours"
             }
         }
     }
