@@ -116,7 +116,7 @@
             },
             {
                 "name": "byte_count",
-                "type": "int(20)",
+                "type": "DECIMAL(30)",
                 "nullable": false,
                 "comment": "FACT: the amount of data transferred for transfers in this time period. If a transfer spanned this time period then only the data transferred during this time period is included under the assumption that the data rate was constant for the transfer."
             },

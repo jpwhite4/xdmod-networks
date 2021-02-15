@@ -161,8 +161,8 @@
             "avg_datarate": {
                 "formula": "SUM( (agg.byte_count / agg.wallduration) * agg.byte_count ) / SUM(agg.byte_count)",
                 "description_html": "The average data rate weighted by amount of data transferred.",
-                "precision": 3,
-                "name": "Data Rate: Weighted by size",
+                "precision": 0,
+                "name": "Avg Data Rate: Weighted by size",
                 "unit": "B/s"
             },
             "transferred_bytes": {

@@ -44,8 +44,8 @@
             "transfer_count": "SUM(1)",
             "wallduration": "COALESCE(SUM( ${wallduration_case_statement}), 0)",
             "sum_wallduration_squared": "COALESCE(SUM( CAST(POW(${wallduration_case_statement}, 2) AS DECIMAL(36,4)) ), 0)",
-            "byte_count": "COALESCE(SUM(tf.bytes * ${wallduration_case_statement}), 0)",
-            "sum_byte_count_squared": "COALESCE(SUM( CAST(POW(tf.bytes * ${wallduration_case_statement}, 2) AS DECIMAL(36,4)) ), 0)"
+            "byte_count": "SUM(${weightedbytes_case_statement})",
+            "sum_byte_count_squared": "COALESCE(SUM( CAST(POW(${weightedbytes_case_statement}, 2) AS DECIMAL(36,4)) ), 0)"
         },
         "groupby": [
             "${AGGREGATION_UNIT}_id",
@@ -93,6 +93,18 @@
                     "max": "${:PERIOD_SECONDS}",
                     "src_start_ts": "tf.start_time_ts",
                     "src_end_ts": "tf.end_time_ts",
+                    "dest_start_ts": "${:PERIOD_START_TS}",
+                    "dest_end_ts": "${:PERIOD_END_TS}"
+                }
+            },
+            {
+                "name": "weightedbytes_case_statement",
+                "file": "statistic_ratio_case.sql",
+                "args": {
+                    "statistic": "tf.bytes",
+                    "max": "${:PERIOD_SECONDS}",
+                    "src_start_ts": "ROUND(tf.start_time_ts, 0)",
+                    "src_end_ts": "ROUND(tf.end_time_ts, 0)",
                     "dest_start_ts": "${:PERIOD_START_TS}",
                     "dest_end_ts": "${:PERIOD_END_TS}"
                 }

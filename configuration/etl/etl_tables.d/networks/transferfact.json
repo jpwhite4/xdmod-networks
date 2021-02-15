@@ -83,7 +83,7 @@
             },
             {
                 "name": "bytes",
-                "type": "int(20)",
+                "type": "DECIMAL(30)",
                 "nullable": false
             },
             {
